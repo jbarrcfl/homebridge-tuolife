@@ -27,7 +27,7 @@ export class ExampleHomebridgePlatform implements DynamicPlatformPlugin {
   ) {
 
     // set sync interval
-    this.syncInterval = setInterval(() => this.syncBulbsWithServer(), 5000);
+    this.syncInterval = setInterval(() => this.syncBulbsWithServer(), 180000);
 
     this.Service = api.hap.Service;
     this.Characteristic = api.hap.Characteristic;
@@ -108,11 +108,13 @@ export class ExampleHomebridgePlatform implements DynamicPlatformPlugin {
         this.log.info('Restoring existing accessory from cache:', existingAccessory.displayName);
         
         // preserve brightness update modeId based on device.modeId
-        existingAccessory.context.device.brightness = Number(device.brightness);
-        existingAccessory.context.device.on = device.modeId !== 'off';
+        
+        //existingAccessory.context.device.brightness = Number(device.brightness);
+        //existingAccessory.context.device.on = device.modeId !== 'off';
 
         // if you need to update the accessory.context then you should run `api.updatePlatformAccessories`. e.g.:
-        //existingAccessory.context.device = device;
+        this.log.debug('Updating accessory context:', device);
+        existingAccessory.context.device = device;
         //this.api.updatePlatformAccessories([existingAccessory]);
 
         // create the accessory handler for the restored accessory
@@ -181,6 +183,7 @@ export class ExampleHomebridgePlatform implements DynamicPlatformPlugin {
       
       // combine all rooms.devices into one array
       // map bulb_ID to bulbId, 
+      this.log.debug('getDevicesAndStatesFromServer:', rooms);
       const allDevices: TuoLifeBulbDevice[] = this.getAllDevicesFromRooms(rooms);
 
       return allDevices;
@@ -217,7 +220,9 @@ export class ExampleHomebridgePlatform implements DynamicPlatformPlugin {
   }
   // todo: tuolifebulb.ts updateHomeKit()
   async updateHomeKit(aBulb: TuoLifeBulbAccessory) {
-    this.log.debug('Updating HomeKit for bulb:', aBulb);
+    //this.log.debug('Updating HomeKit for bulb:', aBulb.bulb);
+    this.log.debug('Updating HomeKit for bulb:', aBulb.getBulbProperties());
+    aBulb.updateHomeKitCharacteristics();
   }
 
   // Send bulb update to server
