@@ -1,6 +1,6 @@
 import type { CharacteristicValue, PlatformAccessory, Service } from 'homebridge';
 
-import type { ExampleHomebridgePlatform } from './platform.js';
+import type { TuoLifeHomebridgePlatform } from './platform.js';
 import { TuoLifeBulbDevice, deviceModes } from './types.js';
 
 /**
@@ -22,7 +22,7 @@ export class TuoLifeBulbAccessory {
   //public bulb: TuoLifeBulbDevice;
 
   constructor(
-    private readonly platform: ExampleHomebridgePlatform,
+    private readonly platform: TuoLifeHomebridgePlatform,
     private readonly accessory: PlatformAccessory,
   ) {
     
