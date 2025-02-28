@@ -248,28 +248,12 @@ export class ExampleHomebridgePlatform implements DynamicPlatformPlugin {
   }
 
   // Helper function to map raw device data to TuoLifeBulbDevice
-  private mapDevice(device: any): TuoLifeBulbDevice {
+  private mapDevice(device: TuoLifeBulbDevice): TuoLifeBulbDevice {
     this.log.debug('Raw device data:', device);
-    if (!device.bulb_ID) {
+    if (!device.bulbId) {
       this.log.warn('Device missing bulb_ID:', device);
     }
-    return {
-      bulbId: device.bulb_ID,
-      groupId: device.groupId,
-      nickname: device.nickname,
-      modeId: device.modeId || 'off',
-      generation: device.generation || 1,
-      userId: device.userId || '',
-      deviceId: device.deviceId || '',
-      firmwareVersion: device.firmwareVersion || '',
-      isAvailable: device.isAvailable || false,
-      brightness: device.brightness || 0,
-      red: device.red || 0,
-      green: device.green || 0,
-      blue: device.blue || 0,
-      violet: device.violet || 0,
-      whiteColor: device.whiteColor || 0,
-    };
+    return this.ensureDeviceDefaults(device);
   }
 
   // Helper function to extract devices from a room
@@ -286,5 +270,26 @@ export class ExampleHomebridgePlatform implements DynamicPlatformPlugin {
       const devices = this.extractDevicesFromRoom(room);
       return [...acc, ...devices];
     }, []);
+  }
+
+  private ensureDeviceDefaults(device: Partial<TuoLifeBulbDevice>): TuoLifeBulbDevice {
+    return {
+      bulbId: 'defaultId',
+      nickname: 'defaultNickname',
+      groupId: 'defaultGroupId',
+      modeId: 'off',
+      generation: '1',
+      userId: '',
+      deviceId: '',
+      firmwareVersion: '',
+      isAvailable: false,
+      brightness: 0,
+      red: 0,
+      green: 0,
+      blue: 0,
+      violet: 0,
+      whiteColor: 0,
+      ...device,  // This will override defaults with actual values
+    };
   }
 }
