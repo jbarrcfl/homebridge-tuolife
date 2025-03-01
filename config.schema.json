@@ -1,5 +1,5 @@
 {
-  "pluginAlias": "TuoLife",
+  "pluginAlias": "HomebridgeTuoLife",
   "pluginType": "platform",
   "singular": true,
   "strictValidation": false,
