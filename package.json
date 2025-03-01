@@ -21,7 +21,7 @@
   "main": "dist/index.js",
   "engines": {
     "node": ">=18.20.4",
-    "homebridge": ">=^1.8.0"
+    "homebridge": ">=1.8.0"
   },
   "scripts": {
     "build": "rimraf ./dist && tsc",
