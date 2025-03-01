@@ -16,7 +16,7 @@
     "url": "https://github.com/jbarrcfl/homebridge-tuolife/issues"
   },
   "keywords": [
-    "homebridge-tuolife", "TuoLife","Daylight Bulb"
+    "homebridge-plugin"
   ],
   "main": "dist/index.js",
   "engines": {
